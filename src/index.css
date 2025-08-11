@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+body {
+    background-color: rgb(16, 35, 25);
+    justify-content: center;
+    margin: 12pc;
+}
