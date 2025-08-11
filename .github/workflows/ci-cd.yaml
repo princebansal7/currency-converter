@@ -23,6 +23,11 @@ jobs:
         with:
           node-version: 20
 
+      - name: Set git user (Bot)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
       - name: Checkout or create gh-pages branch
         run: |
           git fetch origin
@@ -35,10 +40,6 @@ jobs:
             git push origin gh-pages
           fi
 
-      - name: Set git user (Bot)
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Remove everything except CNAME
         run: |
