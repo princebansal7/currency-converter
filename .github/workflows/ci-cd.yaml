@@ -23,10 +23,17 @@ jobs:
         with:
           node-version: 20
 
-      - name: Checkout gh-pages branch
+      - name: Checkout or create gh-pages branch
         run: |
-          git fetch origin gh-pages
-          git checkout gh-pages || git checkout --orphan gh-pages
+          git fetch origin
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git reset --hard
+            git commit --allow-empty -m "Initial gh-pages commit"
+            git push origin gh-pages
+          fi
 
       - name: Set git user (Bot)
         run: |
