@@ -1,7 +1,74 @@
 @import "tailwindcss";
 
-body {
-    background-color: rgb(53, 22, 105);
-    justify-content: center;
-    margin: 12pc;
+/* Card fade-in animation */
+@keyframes cardFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.animate-card-fade-in {
+    animation: cardFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Swap bounce animation */
+@keyframes swapBounce {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+.animate-swap-bounce:active {
+    animation: swapBounce 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.heading-gradient-green {
+    background: linear-gradient(90deg, #00ff99 0%, #39ff14 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes bgMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+.animate-bgMove {
+    animation: bgMove 12s ease-in-out infinite alternate;
+}
+
+.footer-card {
+    background: rgba(34, 40, 49, 0.85);
+    color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 16px 0 rgba(34, 40, 49, 0.12);
+    padding: 1.2rem 2rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    gap: 1rem;
+}
+.footer-link {
+    color: #29d470;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    text-align: center;
+}
+.footer-link:hover {
+    color: #00ff99;
+    text-decoration: underline;
 }

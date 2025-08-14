@@ -10,6 +10,7 @@ function InputBox({
     selectCurrency = "usd",
     currencyDisabled = false,
     className = "",
+    currencyUppercase = false,
 }) {
     const amountInputId = useId();
     return (
@@ -26,12 +27,14 @@ function InputBox({
                 <input
                     id={amountInputId}
                     className="outline-none w-full bg-transparent py-1.5"
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
+                    pattern="[0-9]*"
                     placeholder="Amount"
                     disabled={amountDisabled}
                     value={amount}
                     onChange={e =>
-                        onAmountChange && onAmountChange(Number(e.target.value))
+                        onAmountChange && onAmountChange(e.target.value)
                     }
                 />
             </div>
@@ -47,7 +50,9 @@ function InputBox({
                 >
                     {currencyOptions.map(currentCurrency => (
                         <option key={currentCurrency} value={currentCurrency}>
-                            {currentCurrency}
+                            {currencyUppercase
+                                ? currentCurrency.toUpperCase()
+                                : currentCurrency}
                         </option>
                     ))}
                 </select>
