@@ -3,15 +3,15 @@ import { useId } from "react";
 function InputBox({
     label,
     amount,
+    currencyOptions = [],
     onAmountChange,
     amountDisabled = false,
     onCurrencyChange,
-    currencyOptions = [],
     selectCurrency = "usd",
     currencyDisabled = false,
     className = "",
 }) {
-    const amountInputId = useId;
+    const amountInputId = useId();
     return (
         <div
             className={`bg-white p-3 rounded-lg text-sm flex w-2xl  ${className}`}
