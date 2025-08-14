@@ -47,8 +47,9 @@ function App() {
                             Currency Converter
                         </h1>
                         <p className="text-base md:text-lg text-green-200 font-medium mb-6 animate__animated animate__fadeInUp text-center">
-                            Instantly convert between 150+ currencies with
-                            real-time rates. Fast, beautiful, and reliable.
+                            Instantly convert between 150+ currencies including
+                            Bitcoin with real-time rates. Fast, beautiful, and
+                            reliable.
                         </p>
                     </div>
                     <form

@@ -1,4 +1,5 @@
 import { useId } from "react";
+import currencyNames from "../currencyNames";
 
 function InputBox({
     label,
@@ -50,24 +51,31 @@ function InputBox({
                     Currency Type
                 </p>
                 <select
-                    className="rounded-lg px-1 py-1 bg-gray-100 cursor-pointer outline-none text-green-800 font-bold text-sm"
+                    className="rounded-lg px-1 py-1 bg-gray-100 cursor-pointer outline-none text-green-800 font-bold text-sm max-w-[110px] w-full truncate overflow-hidden"
                     value={selectCurrency}
                     onChange={e =>
                         onCurrencyChange && onCurrencyChange(e.target.value)
                     }
                     disabled={currencyDisabled}
                 >
-                    {currencyOptions.map(currentCurrency => (
-                        <option
-                            key={currentCurrency}
-                            value={currentCurrency}
-                            className="text-green-800 font-bold"
-                        >
-                            {currencyUppercase
-                                ? currentCurrency.toUpperCase()
-                                : currentCurrency}
-                        </option>
-                    ))}
+                    {currencyOptions.map(currentCurrency => {
+                        const code = currencyUppercase
+                            ? currentCurrency.toUpperCase()
+                            : currentCurrency;
+                        const fullName =
+                            currencyNames[code.toUpperCase()] || "";
+                        const label = fullName ? `${code} - ${fullName}` : code;
+                        return (
+                            <option
+                                key={currentCurrency}
+                                value={currentCurrency}
+                                className="text-green-800 font-bold truncate"
+                                title={label}
+                            >
+                                {label}
+                            </option>
+                        );
+                    })}
                 </select>
             </div>
         </div>
