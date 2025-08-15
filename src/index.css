@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@keyframes footerFadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.animate-footer-fade-in {
+    animation: footerFadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
 /* Card fade-in animation */
 @keyframes cardFadeIn {
     0% {

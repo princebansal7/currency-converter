@@ -48,8 +48,7 @@ function App() {
                         </h1>
                         <p className="text-base md:text-lg text-green-200 font-medium mb-6 animate__animated animate__fadeInUp text-center">
                             Instantly convert between 150+ currencies including
-                            Bitcoin with real-time rates. Fast, beautiful, and
-                            reliable.
+                            Bitcoin with real-time rates.
                         </p>
                     </div>
                     <form
@@ -85,7 +84,7 @@ function App() {
                                     onClick={swap}
                                     aria-label="Swap currencies"
                                 >
-                                    <span className="text-3xl">&#8645;</span>
+                                    <span className="text-2xl">&#8645;</span>
                                 </button>
                             </div>
                             <InputBox
@@ -102,15 +101,15 @@ function App() {
                                 currencyUppercase={true}
                             />
                         </div>
-                        <button
+                        {/* <button
                             type="submit"
                             className="w-full bg-gradient-to-r from-green-500 to-black text-white px-4 py-3 rounded-xl font-semibold text-lg shadow-md hover:from-black hover:to-green-500 transition-all duration-200 mt-8 border-2 border-green-600"
                         >
                             Convert {fromCurrency.toUpperCase()} to{" "}
                             {toCurrency.toUpperCase()}
-                        </button>
+                        </button> */}
                     </form>
-                    <footer className="footer-card animate-card-fade-in bg-gradient-to-br from-black via-green-950 to-black/90 text-green-300 px-4 sm:px-8 pb-6 pt-2 border-t border-green-900 mt-2 text-center flex flex-col items-center">
+                    <footer className="footer-card animate-footer-fade-in bg-gradient-to-br from-black via-green-950 to-black/90 text-green-300 px-6 sm:px-12 pb-6 pt-3 border-t-4 border-green-700 mt-10 mb-6 mx-auto rounded-2xl shadow-2xl text-center flex flex-col items-center max-w-xl">
                         <span className="w-full text-green-300">
                             &copy; {year} ·{"  "}
                             <a
