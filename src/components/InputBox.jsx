@@ -46,7 +46,7 @@ function InputBox({
                 </div>
                 <div className="shrink-0">
                     <select
-                        className="currency-select rounded-xl px-3 py-2 text-white text-sm font-semibold outline-none cursor-pointer transition-colors duration-150 max-w-[145px] truncate"
+                        className="currency-select rounded-xl px-3 py-2 text-white text-sm font-semibold outline-none cursor-pointer transition-colors duration-150 max-w-[100px] sm:max-w-[145px] truncate"
                         style={{
                             background: "rgba(255, 255, 255, 0.08)",
                             border: "1px solid rgba(255, 255, 255, 0.15)",

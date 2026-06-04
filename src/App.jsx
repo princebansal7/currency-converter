@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { InputBox } from "./components";
 import useCurrencyInfo from "./hooks/useCurrencyInfo";
 
@@ -10,27 +10,34 @@ const QUICK_PAIRS = [
     { from: "btc", to: "usd" },
 ];
 
+const FOOTER_YEAR = new Date().getFullYear();
+
 function App() {
     const [fromCurrency, setFromCurrency] = useState("inr");
     const [amount, setAmount] = useState("");
     const [toCurrency, setToCurrency] = useState("usd");
     const [convertedAmount, setConvertedAmount] = useState("");
     const [isSwapping, setIsSwapping] = useState(false);
+    const swapTimerRef = useRef(null);
 
-    const { data: currencyInfo, loading } = useCurrencyInfo(fromCurrency);
+    const { data: currencyInfo, loading, error } = useCurrencyInfo(fromCurrency);
     const options = Object.keys(currencyInfo);
 
-    React.useEffect(() => {
-        if (amount === "" || isNaN(Number(amount))) {
+    useEffect(() => {
+        const num = Number(amount);
+        if (amount === "" || isNaN(num) || !isFinite(num)) {
             setConvertedAmount("");
             return;
         }
-        if (currencyInfo && currencyInfo[toCurrency]) {
-            setConvertedAmount(
-                Number((Number(amount) * currencyInfo[toCurrency]).toFixed(2))
-            );
+        const rate = currencyInfo[toCurrency];
+        if (rate !== undefined && rate !== null) {
+            setConvertedAmount(Number((num * rate).toFixed(2)));
+        } else {
+            setConvertedAmount("");
         }
     }, [amount, fromCurrency, toCurrency, currencyInfo]);
+
+    useEffect(() => () => clearTimeout(swapTimerRef.current), []);
 
     const swap = () => {
         setIsSwapping(true);
@@ -38,15 +45,12 @@ function App() {
         setToCurrency(fromCurrency);
         setAmount(convertedAmount === "" ? "" : String(convertedAmount));
         setConvertedAmount(amount === "" ? "" : String(amount));
-        setTimeout(() => setIsSwapping(false), 500);
+        clearTimeout(swapTimerRef.current);
+        swapTimerRef.current = setTimeout(() => setIsSwapping(false), 500);
     };
 
-    const exchangeRate =
-        currencyInfo && currencyInfo[toCurrency]
-            ? currencyInfo[toCurrency]
-            : null;
-
-    const year = new Date().getFullYear();
+    const rate = currencyInfo[toCurrency];
+    const exchangeRate = rate !== undefined && rate !== null ? rate : null;
 
     return (
         <div
@@ -151,7 +155,7 @@ function App() {
                                 {/* Swap button — absolutely centered on the divider */}
                                 <button
                                     type="button"
-                                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-90 ${isSwapping ? "animate-swap-rotate" : ""}`}
+                                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-90 ${isSwapping ? "animate-swap-rotate" : ""}`}
                                     style={{
                                         background:
                                             "linear-gradient(145deg, #0ea5e9 0%, #06b6d4 100%)",
@@ -196,11 +200,23 @@ function App() {
                                 />
                             </div>
 
-                            {/* Exchange rate / loading */}
+                            {/* Exchange rate / loading / error */}
                             <div className="mt-4 min-h-[46px] flex items-center">
                                 {loading ? (
                                     <div className="w-full h-11 shimmer" />
-                                ) : exchangeRate ? (
+                                ) : error ? (
+                                    <div
+                                        className="w-full px-4 py-3 rounded-xl flex items-center justify-center gap-2"
+                                        style={{
+                                            background: "rgba(239,68,68,0.08)",
+                                            border: "1px solid rgba(239,68,68,0.2)",
+                                        }}
+                                    >
+                                        <span className="text-red-400 text-sm">
+                                            Failed to load rates. Check your connection.
+                                        </span>
+                                    </div>
+                                ) : exchangeRate !== null ? (
                                     <div
                                         className="w-full px-4 py-3 rounded-xl flex items-center justify-center gap-2"
                                         style={{
@@ -276,9 +292,9 @@ function App() {
                     {/* Footer */}
                     <div className="mt-8 text-center">
                         <span className="text-slate-600 text-xs">
-                            &copy; {year} ·{" "}
+                            &copy; {FOOTER_YEAR} ·{" "}
                             <a
-                                href="https://princebansal.in"
+                                href="https://www.princebansal.in"
                                 className="footer-link"
                                 target="_blank"
                                 rel="noopener noreferrer"
