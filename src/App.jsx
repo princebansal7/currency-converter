@@ -21,7 +21,10 @@ function App() {
     const swapTimerRef = useRef(null);
 
     const { data: currencyInfo, loading, error } = useCurrencyInfo(fromCurrency);
-    const options = Object.keys(currencyInfo);
+    const rawOptions = Object.keys(currencyInfo);
+    const options = rawOptions.includes(fromCurrency)
+        ? rawOptions
+        : [...rawOptions, fromCurrency].sort();
 
     useEffect(() => {
         const num = Number(amount);
